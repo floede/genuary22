@@ -55,7 +55,7 @@ let positions = [
 ];
 
 function setup() {
-  createCanvas(width, height);
+  c = createCanvas(width, height);
   background(3, 5, 4);
   //positions[0] = [width / 2, height / 2];
 }
@@ -71,4 +71,5 @@ function draw() {
     noStroke();
   }
   noLoop();
+  saveCanvas(c, "Destroy", "jpg");
 }
