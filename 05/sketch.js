@@ -63,13 +63,17 @@ function setup() {
 function draw() {
   for (let index = 0; index < positions.length; index++) {
     //const element = ;
+    push();
     translate(width / 2, height / 2);
-    rotate(1 / (100 - index));
+    rotate(1 / (10 - index));
     //square(0, 0, squareSize);
+    colorMode(HSB);
+    fill(255, 204, 25 + index);
     rect(positions[index][0], positions[index][1], 50, 50);
-    translate(-width / 2, -height / 2);
+    //translate(-width / 2, -height / 2);
     noStroke();
+    pop();
   }
   noLoop();
-  saveCanvas(c, "Destroy", "jpg");
+  saveCanvas(c, "Destroy 3", "jpg");
 }
