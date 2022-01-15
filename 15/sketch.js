@@ -1,60 +1,62 @@
-const w = 500;
-const h = 1000;
+const w = 600;
+const h = 600;
 
-//--blue-ncs: hsla(200, 68%, 48%, 1);
-//--blue-sapphire: hsla(198, 64%, 30%, 1);
-//--light-steel-blue: hsla(212, 28%, 74%, 1);
-//--beaver: hsla(31, 23%, 54%, 1);
-//--raw-umber: hsla(23, 18%, 41%, 1);
+let col = [];
+col[1] = "#ede0d4";
+col[2] = "#e6ccb2";
+col[3] = "#ddb892";
+col[4] = "#b08968";
+col[5] = "#7f5539";
+col[6] = "#9c6644";
 
-const waves = 1;
-const waveLines = new Array(waves);
+const layers = new Array(5);
 
 function setup() {
   c = createCanvas(w, h);
-  colorMode(HSB);
 
-  for (let index = 0; index < waveLines.length; index++) {
-    waveLines[index] = [];
-    for (let j = 0; j < width; j++) {
-      waveLines[index][j] = new WaveLine(j);
-    }
+  for (let index = 0; index < layers.length; index++) {
+    layers[index] = new Sand(index * 140, col[index + 1]);
   }
 }
+
+console.log("LAYERS: ", layers);
 
 function draw() {
-  background(31, 23, 54, 1);
-  for (var i = 0; i < waveLines.length; i++) {
-    for (let j = 0; j < waveLines[i].length; j++) {
-      waveLines[i][j].roll();
-      waveLines[i][j].show();
-    }
+  background(200);
+  for (let index = 0; index < layers.length; index++) {
+    layers[index].show();
   }
+  noLoop();
+  saveCanvas(c, "Sand", "svg");
 }
 
-class WaveLine {
-  constructor(pos) {
-    this.seed = pos;
-    this.x = pos;
-    this.y = h + this.seed;
-    this.shoreLine = 100;
-    this.yspeed = 5;
-    this.coming = true;
-
-    this.roll = function () {
-      this.yspeed = (this.coming ? 0.04 : -0.04) * (this.y - this.shoreLine);
-      this.y = this.y - this.yspeed;
-      if (this.y < this.shoreLine + 1) {
-        this.coming = false;
-      }
-      if (this.y > h) {
-        this.coming = true;
-      }
-    };
+class Sand {
+  constructor(pos, col) {
     this.show = function () {
-      stroke(200, 68, 48, 0.5);
-      line(this.x, this.y, this.x, h);
-      circle(this.x, this.y, 10);
+      noStroke();
+      fill(col);
+      beginShape();
+      vertex(0, pos);
+      bezierVertex(
+        0.167 * w + random(10) - 5,
+        pos + random(100) + 20,
+        0.33 * w + random(10) - 5,
+        pos - random(100) - 20,
+        0.5 * w + random(10) - 5,
+        pos
+      );
+      bezierVertex(
+        0.67 * w + random(10) - 5,
+        pos + random(100) + 20,
+        0.83 * w + random(10) - 5,
+        pos - random(100) - 20,
+        w,
+        pos
+      );
+      vertex(w, h);
+      vertex(0, h);
+      vertex(0, pos);
+      endShape();
     };
   }
 }
