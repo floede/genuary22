@@ -7,26 +7,29 @@
     <title>Genuary2022 - Day 14</title>
   </head>
   <body>
-    <canvas width="800" height="800"></canvas>
+    <canvas width="600" height="600"></canvas>
     <script>
       let canvas = document.querySelector("canvas");
       let context = canvas.getContext("2d");
 
-      context.fillStyle = "blue";
-      // context.fillRect(100, 100, 400, 400);
-
       context.lineWidth = 4;
-      context.beginPath();
-      context.rect(100, 100, 400, 400);
-      //context.stroke();
 
-      context.beginPath();
-      context.arc(400, 400, 100, 0, Math.PI * 2);
-      //context.stroke();
       const width = 60;
       const height = 60;
       const gap = 20;
       let x, y;
+
+      const colors = [
+        "#f8f9faff",
+        "#e9ecefff",
+        "#dee2e6ff",
+        "#ced4daff",
+        "#adb5bdff",
+        "#6c757dff",
+        "#495057ff",
+        "#343a40ff",
+        "#212529ff",
+      ];
 
       for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 5; j++) {
@@ -35,12 +38,62 @@
 
           context.beginPath();
           context.rect(x, y, width, height);
+          context.fillStyle = colors[Math.round(Math.random() * colors.length)];
+          context.fill();
           context.stroke();
+          context.closePath();
 
+          //context.beginPath();
+          context.save();
+          if (Math.random() > 0.5) {
+            context.translate(x + width / 2, y + height / 2);
+            context.rotate(
+              (90 * (Math.round(Math.random() * 4) * Math.PI)) / 180
+            );
+            context.lineJoin = "bevel";
+            context.moveTo(0, 0); // 0, 50
+            context.lineTo(-width / 2, -height / 2); // 50, 0
+            context.lineTo(width / 2, -height / 2); // 100, 0
+            context.lineTo(0, 0); // 0, 50
+            context.stroke();
+            context.closePath();
+          }
+          context.restore();
           if (Math.random() > 0.5) {
             context.beginPath();
             context.rect(x + 8, y + 8, width - 16, height - 16);
+            context.fillStyle =
+              colors[Math.round(Math.random() * colors.length)];
+            context.fill();
             context.stroke();
+            context.closePath();
+          }
+          context.save();
+          if (Math.random() > 0.5) {
+            context.translate(x + width / 2, y + height / 2);
+            context.rotate(
+              (90 * (Math.round(Math.random() * 4) * Math.PI)) / 180
+            );
+            context.lineJoin = "bevel";
+            context.moveTo(0, 0); // 0, 50
+            context.lineTo(-width / 2, -height / 2); // 50, 0
+            context.lineTo(width / 2, -height / 2); // 100, 0
+            context.lineTo(0, 0); // 0, 50
+            context.fillStyle =
+              colors[Math.round(Math.random() * colors.length)];
+            context.fill();
+            context.stroke();
+            context.closePath();
+          }
+          context.restore();
+          if (Math.random() > 0.5) {
+            context.beginPath();
+            context.rect(x + 16, y + 16, width - 32, height - 32);
+            context.fillStyle =
+              colors[Math.round(Math.random() * colors.length)];
+            context.fill();
+            context.stroke();
+            context.closePath();
           }
         }
       }
