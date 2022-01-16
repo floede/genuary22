@@ -1,9 +1,9 @@
 const height = 1000;
 const width = 1000;
-const bg = "#cccccc";
+const bg = "#fefefe";
 
 const rowHeight = 100;
-const gap = 40;
+const gap = 80;
 const rows = height / rowHeight;
 
 const cols = [
@@ -22,25 +22,39 @@ let elms = [];
 
 function setup(params) {
   c = createCanvas(width, height);
-  //colorMode(HSB);
+  colorMode(HSB);
   background(bg);
   strokeWeight(16);
-  //elms[0] = new Flower(width / 2, height / 2, "#000000");
   for (let i = 0; i < rows; i++) {
+    let row = [];
     for (let j = 0; j < rows; j++) {
-      let x = 100 * i + gap;
-      let y = 60;
-      let color = "#000";
-      elms[i] = i % 2 == 0 ? new Square(x, y, color) : new Logo(x, y, color);
+      let x = 100 * j + gap;
+      let y = 100 * i + gap;
+      let color = colors[1][Math.floor(random(7))].hsb;
+      if (i % 2 === 0) {
+        if (i % 4 === 0) {
+          row[j] = j % 2 == 0 ? new Square(x, y, color) : new Logo(x, y, color);
+        } else {
+          row[j] =
+            j % 2 == 0 ? new Flower(x, y, color) : new Square(x, y, color);
+        }
+      } else {
+        row[j] = new Cross(x - 50, y, color);
+      }
     }
+    elms[i] = row;
   }
 }
 
 function draw(params) {
   //translate(width / 2, height / 2);
   for (let i = 0; i < elms.length; i++) {
-    elms[i].show();
+    for (let j = 0; j < elms[i].length; j++) {
+      elms[i][j].show();
+    }
   }
+  noLoop();
+  saveCanvas(c, "Color gradient", "png");
 }
 
 class Cross {
@@ -50,6 +64,7 @@ class Cross {
     this.col = col;
 
     this.show = function () {
+      stroke(this.col);
       // vertical line
       line(this.x - 0.5 * len, this.y, this.x + 0.5 * len, this.y);
       // horizontal line
@@ -110,8 +125,10 @@ class Flower {
 
       fill(this.col);
       stroke(bg);
+      push();
       strokeWeight(2);
       circle(this.x, this.y, 22);
+      pop();
     };
   }
 }
