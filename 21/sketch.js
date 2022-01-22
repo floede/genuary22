@@ -3,12 +3,13 @@ const h = 1000;
 
 const grid = [];
 const HexSize = 100;
-const HexSide = 56;
+const HexSide = HexSize / Math.sqrt(3); //56;
 
 const greys = [20, 60, 100, 140, 180, 220, 240];
 function setup(params) {
   c = createCanvas(w, h);
   background(220);
+  noStroke();
   for (let j = 0; j < 1 + h / HexSize; j++) {
     let row = [];
     for (let index = 0; index < 1 + w / HexSize; index++) {
@@ -29,28 +30,33 @@ function draw(params) {
       let y = grid[j][index][1];
       push();
       translate(x, y);
-      rightSide(HexSide, randdomGrey());
-      leftSide(HexSide, randdomGrey());
-      rotate(90 * (PI / 180));
-      rightSide(HexSide * 0.75, randdomGrey());
-      leftSide(HexSide * 0.75, randdomGrey());
-      rotate(90 * (PI / 180));
-      rightSide(HexSide * 0.5, randdomGrey());
-      leftSide(HexSide * 0.5, randdomGrey());
+      rotate(30 * (PI / 180));
+      drawHalfHex(0, 0, HexSide, randdomGrey());
+      rotate(PI);
+      drawHalfHex(0, 0, HexSide, randdomGrey());
+      rotate(PI);
+      drawHalfHex(0, 0, HexSide * 0.75, randdomGrey());
+      rotate(PI);
+      drawHalfHex(0, 0, HexSide * 0.75, randdomGrey());
+      rotate(PI);
+      drawHalfHex(0, 0, HexSide * 0.5, randdomGrey());
+      rotate(PI);
+      drawHalfHex(0, 0, HexSide * 0.5, randdomGrey());
       pop();
     }
   }
   noLoop();
-  saveCanvas(c, "Combine", "png");
+  //saveCanvas(c, "Combine", "png");
 }
 
 function rightSide(len, col) {
-  let count = 0;
+  drawHalfHex(0, 0, len, col);
+  /*   let count = 0;
   while (count < 3) {
     rotate((count == 0 ? -30 : 60) * (PI / 180));
     new Triangle(len, 0, 0, col);
     count++;
-  }
+  } */
 }
 
 function randdomGrey() {
@@ -58,18 +64,29 @@ function randdomGrey() {
 }
 
 function leftSide(len, col) {
-  let count = 0;
+  drawHalfHex(0, 0, len, col);
+  /*   let count = 0;
   while (count < 3) {
     rotate(60 * (PI / 180));
     new Triangle(len, 0, 0, col);
     count++;
-  }
+  } */
 }
 
 class Triangle {
   constructor(len, x, y, col) {
-    noStroke();
     fill(col);
     triangle(x, y, x + 0.5 * len, y - len * Math.sin(Math.PI / 3), x + len, y);
   }
+}
+
+function drawHalfHex(x, y, len, col) {
+  let gs = 0.5 * len;
+  fill(col);
+  beginShape();
+  vertex(x - gs, y - sqrt(3) * gs);
+  vertex(x + gs, y - sqrt(3) * gs);
+  vertex(x + 2 * gs, y);
+  vertex(x + gs, y + sqrt(3) * gs);
+  endShape(CLOSE);
 }
