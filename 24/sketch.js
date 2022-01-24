@@ -3,6 +3,7 @@ const h = 1000;
 
 function setup(params) {
   c = createCanvas(w, h);
+  colorMode(HSB, 100);
   function pseudoRandom(seed, num_of_digits) {
     n = (seed * seed).toString();
     while (n.length < num_of_digits * 2) {
@@ -13,16 +14,30 @@ function setup(params) {
     seed = parseInt(n.substring(start, end));
     return seed;
   }
-  num_of_digits = 6;
+  /*   num_of_digits = 6;
   seed = 1452;
   for (i = 0; i < 5; i++) {
     random_number = pseudoRandom(seed, num_of_digits);
     console.log(random_number);
     seed = random_number;
+  } */
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      let col = [i * 10, j * 10, 100];
+      //let col2 = [pseudoRandom(i * 10, 2), pseudoRandom(j * 10, 2), 100];
+      let col2 = [random(i * 10), random(j * 10), 100];
+      let sqr1 = new Square(100 * i, 100 * j, col);
+      let sqr2 = new Square(50 + 100 * i, 100 * j, col2);
+      sqr1.show();
+      sqr2.show();
+    }
   }
 }
 
-function draw(params) {}
+function draw(params) {
+  noLoop();
+  saveCanvas(c, "PRNG", "png");
+}
 
 class Square {
   constructor(x, y, col) {
@@ -32,8 +47,8 @@ class Square {
 
     this.show = function () {
       fill(this.col);
-      stroke(bg);
-      square(0, 0, size);
+      noStroke();
+      rect(this.x, this.y, 50, 100);
     };
   }
 }
