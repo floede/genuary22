@@ -46,6 +46,7 @@ function draw() {
       pop();
     }
   }
+  //filter(BLUR, 1);
   noLoop();
   //saveCanvas(c, "Boxes", "png");
 }
