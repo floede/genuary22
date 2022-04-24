@@ -4,7 +4,7 @@ const h = 1000;
 const cx = w * 0.5;
 const cy = h * 0.5;
 const pokeW = w * 0.01;
-const pokeH = h * 0.11;
+const pokeH = h * 0.105;
 
 const radius = w * 0.3;
 
@@ -19,12 +19,12 @@ function setup() {
 function draw() {
   const num = 120;
 
-  const rings = 4;
+  const rings = 5;
   const ringWidth = 100 / rings;
   const variation = 40;
 
   for (let reps = 0; reps < rings; reps++) {
-    let col = colors[0][Math.floor(random(0, 10))].hsb;
+    let col = colors[2][reps].hsb;
     rectMode(CENTER);
     if (reps === rings - 1) {
       rectMode(CORNER);
@@ -59,4 +59,5 @@ function draw() {
   }
 
   noLoop();
+  saveCanvas(c, "Sun", "png");
 }
