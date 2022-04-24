@@ -1,3 +1,7 @@
 const degToRad = (degrees) => {
-  return (degrees / 180) * PI;
+  return (degrees / 180) * Math.PI;
+};
+
+const randCol = () => {
+  return [random(255), random(255), random(255)];
 };
