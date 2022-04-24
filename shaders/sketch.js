@@ -20,7 +20,7 @@ function draw() {
   shader(theShader);
 
   // rect gives us some geometry on the screen
-  rect(0, 0, 100, 100); // This means nothing???
+  rect(0, 0, width, height); // This means nothing???
 
   //saveCanvas(c, "Shader: The Void (blue)", "png");
   noLoop();
