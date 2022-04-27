@@ -4,52 +4,37 @@ const colors =
     [
       {
         name: "Red",
-        hex: "ff0000",
+        hex: "#ff0000",
         rgb: [255, 0, 0],
-        cmyk: [0, 100, 100, 0],
         hsb: [0, 100, 100],
-        hsl: [0, 100, 50],
-        lab: [53, 80, 67],
       },
       {
         name: "Dark Orange",
-        hex: "ff8700",
+        hex: "#ff8700",
         rgb: [255, 135, 0],
-        cmyk: [0, 47, 100, 0],
         hsb: [32, 100, 100],
-        hsl: [32, 100, 50],
-        lab: [68, 39, 75],
       },
       {
         name: "Cyber Yellow",
-        hex: "ffd300",
+        hex: "#ffd300",
         rgb: [255, 211, 0],
-        cmyk: [0, 17, 100, 0],
         hsb: [50, 100, 100],
-        hsl: [50, 100, 50],
-        lab: [86, 0, 86],
       },
       {
         name: "Chartreuse Traditional",
-        hex: "deff0a",
+        hex: "#deff0a",
         rgb: [222, 255, 10],
-        cmyk: [13, 0, 96, 0],
         hsb: [68, 96, 100],
-        hsl: [68, 100, 52],
-        lab: [95, -35, 91],
       },
       {
         name: "Spring Bud",
-        hex: "a1ff0a",
+        hex: "#a1ff0a",
         rgb: [161, 255, 10],
-        cmyk: [37, 0, 96, 0],
         hsb: [83, 96, 100],
-        hsl: [83, 100, 52],
-        lab: [91, -57, 87],
       },
       {
         name: "Medium Spring Green",
-        hex: "0aff99",
+        hex: "#0aff99",
         rgb: [10, 255, 153],
         cmyk: [96, 0, 40, 0],
         hsb: [155, 96, 100],
@@ -58,7 +43,7 @@ const colors =
       },
       {
         name: "Electric Blue",
-        hex: "0aefff",
+        hex: "#0aefff",
         rgb: [10, 239, 255],
         cmyk: [96, 6, 0, 0],
         hsb: [184, 96, 100],
@@ -67,7 +52,7 @@ const colors =
       },
       {
         name: "Azure",
-        hex: "147df5",
+        hex: "#147df5",
         rgb: [20, 125, 245],
         cmyk: [92, 49, 0, 4],
         hsb: [212, 92, 96],
@@ -76,7 +61,7 @@ const colors =
       },
       {
         name: "Han Purple",
-        hex: "580aff",
+        hex: "#580aff",
         rgb: [88, 10, 255],
         cmyk: [65, 96, 0, 0],
         hsb: [259, 96, 100],
@@ -85,7 +70,7 @@ const colors =
       },
       {
         name: "Electric Purple",
-        hex: "be0aff",
+        hex: "#be0aff",
         rgb: [190, 10, 255],
         cmyk: [25, 96, 0, 0],
         hsb: [284, 96, 100],
@@ -96,7 +81,7 @@ const colors =
     [
       {
         name: "Middle Green",
-        hex: "528865",
+        hex: "#528865",
         rgb: [82, 136, 101],
         cmyk: [40, 0, 26, 47],
         hsb: [141, 40, 53],
@@ -105,7 +90,7 @@ const colors =
       },
       {
         name: "Liberty",
-        hex: "4A5199",
+        hex: "#4A5199",
         rgb: [74, 81, 153],
         cmyk: [52, 47, 0, 40],
         hsb: [235, 52, 60],
@@ -114,7 +99,7 @@ const colors =
       },
       {
         name: "Camel",
-        hex: "BB9166",
+        hex: "#BB9166",
         rgb: [187, 145, 102],
         cmyk: [0, 22, 45, 27],
         hsb: [30, 45, 73],
@@ -123,7 +108,7 @@ const colors =
       },
       {
         name: "Lemon Curry",
-        hex: "C39D22",
+        hex: "#C39D22",
         rgb: [195, 157, 34],
         cmyk: [0, 19, 83, 24],
         hsb: [46, 83, 76],
@@ -132,7 +117,7 @@ const colors =
       },
       {
         name: "Wild Orchid",
-        hex: "C47C9E",
+        hex: "#C47C9E",
         rgb: [196, 124, 158],
         cmyk: [0, 37, 19, 23],
         hsb: [332, 37, 77],
@@ -141,7 +126,7 @@ const colors =
       },
       {
         name: "Ruby Red",
-        hex: "A01226",
+        hex: "#A01226",
         rgb: [160, 18, 38],
         cmyk: [0, 89, 76, 37],
         hsb: [352, 89, 63],
@@ -150,7 +135,7 @@ const colors =
       },
       {
         name: "Iceberg",
-        hex: "72ACD3",
+        hex: "#72ACD3",
         rgb: [114, 172, 211],
         cmyk: [46, 18, 0, 17],
         hsb: [204, 46, 83],
@@ -161,7 +146,7 @@ const colors =
     [
       {
         name: "Light Cornflower Blue",
-        hex: "8ecae6",
+        hex: "#8ecae6",
         rgb: [142, 202, 230],
         cmyk: [38, 12, 0, 10],
         hsb: [199, 38, 90],
@@ -170,7 +155,7 @@ const colors =
       },
       {
         name: "Blue Green",
-        hex: "219ebc",
+        hex: "#219ebc",
         rgb: [33, 158, 188],
         cmyk: [82, 16, 0, 26],
         hsb: [192, 82, 74],
@@ -179,7 +164,7 @@ const colors =
       },
       {
         name: "Prussian Blue",
-        hex: "023047",
+        hex: "#023047",
         rgb: [2, 48, 71],
         cmyk: [97, 32, 0, 72],
         hsb: [200, 97, 28],
@@ -188,7 +173,7 @@ const colors =
       },
       {
         name: "Selective Yellow",
-        hex: "ffb703",
+        hex: "#ffb703",
         rgb: [255, 183, 3],
         cmyk: [0, 28, 99, 0],
         hsb: [43, 99, 100],
@@ -197,7 +182,7 @@ const colors =
       },
       {
         name: "Tangerine",
-        hex: "fb8500",
+        hex: "#fb8500",
         rgb: [251, 133, 0],
         cmyk: [0, 47, 100, 2],
         hsb: [32, 100, 98],
