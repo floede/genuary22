@@ -38,6 +38,7 @@ function draw() {
   noStroke();
   for (let x = 0; x < gridDivsX; x++) {
     for (let y = 0; y < gridDivsY; y++) {
+      let maxDist = dist(0, 0, width / 2, height / 2);
       let d = dist(
         padding + 0.5 * gridSpacingX + x * gridSpacingX,
         padding + 0.5 * gridSpacingY + y * gridSpacingY,
@@ -52,16 +53,25 @@ function draw() {
       );
       let rollBig = 100 * random();
 
-      if (rollBig > 20 + (d / 460) * 100) {
+      if (rollBig > 30 + (d / maxDist) * 100) {
         rotate(90 * floor(4 * random()));
         let bigCircle = new BigCircle();
       }
 
       let rollSmall = 100 * random();
 
-      if (rollSmall > 40 + (d / 460) * 100) {
+      if (rollSmall > 40 + (d / maxDist) * 100) {
         let smallCircle = new SmallCircle();
       }
+
+      /*       console.table({
+        "Max dist": maxDist,
+        dist: d,
+        "Dist %": (d / maxDist) * 100,
+        "Big roll": rollBig,
+        "Small roll": rollSmall,
+      }); */
+
       pop();
     }
   }
@@ -90,14 +100,14 @@ class BigCircle {
       );
     } else {
       if (random() > 0.5) {
-        noStroke();
+        //noStroke();
         fill(palette[random([1, 2, 3, 4])].hsb);
       } else {
         noFill();
-        strokeWeight(2);
         stroke(palette[random([1, 2, 3, 4])].hsb);
       }
-      circle(0, 0, gridSpacingX);
+      strokeWeight(0.05 * gridSpacingX);
+      circle(0, 0, gridSpacingX - 0.05 * gridSpacingX);
     }
   }
 }
@@ -109,9 +119,9 @@ class SmallCircle {
       fill(palette[random([1, 2, 3, 4])].hsb);
     } else {
       noFill();
-      strokeWeight(2);
       stroke(palette[random([1, 2, 3, 4])].hsb);
     }
+    strokeWeight(0.05 * gridSpacingX);
     circle(0, 0, gridSpacingX / 2);
   }
 }
