@@ -84,8 +84,10 @@ function draw() {
     }
   }
   stroke(100);
-  line(padding, 0, padding, height);
+  /*   line(padding, 0, padding, height);
   line(width - padding, 0, width - padding, height);
+  line(0, padding, height, padding);
+  line(0, height - padding, width, height - padding); */
   noLoop();
   //saveCanvas(c, "Dance Dots", "png");
 }
@@ -112,7 +114,9 @@ class BigCircle {
     } else {
       if (random() > 0.5) {
         //noStroke();
-        fill(palette[random([1, 2, 3, 4])].hsb);
+        let col = palette[random([1, 2, 3, 4])].hsb;
+        fill(col);
+        stroke(col);
       } else {
         noFill();
         stroke(palette[random([1, 2, 3, 4])].hsb);
