@@ -54,7 +54,7 @@ function draw() {
       let rollBig = 100 * random();
 
       if (rollBig > 30 + (d / maxDist) * 100) {
-        rotate(90 * floor(4 * random()));
+        //rotate(90 * floor(4 * random()));
         let bigCircle = new BigCircle();
       }
 
@@ -75,6 +75,8 @@ function draw() {
       pop();
     }
   }
+  stroke(100);
+  //line(width - padding, 0, width - padding, height);
   noLoop();
   //saveCanvas(c, "Dance Dots", "png");
 }
@@ -101,7 +103,9 @@ class BigCircle {
     } else {
       if (random() > 0.5) {
         //noStroke();
-        fill(palette[random([1, 2, 3, 4])].hsb);
+        let col = palette[random([1, 2, 3, 4])].hsb;
+        fill(col);
+        stroke(col);
       } else {
         noFill();
         stroke(palette[random([1, 2, 3, 4])].hsb);
