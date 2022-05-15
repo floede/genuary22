@@ -94,7 +94,7 @@ function draw() {
   line(0, padding, height, padding);
   line(0, height - padding, width, height - padding);*/
   noLoop();
-  saveCanvas(c, `Dance Dots${centered ? " - centered" : ""}`, "png");
+  //saveCanvas(c, `Dance Dots${centered ? " - centered" : ""}`, "png");
 }
 
 class BigCircle {
