@@ -33,6 +33,7 @@ function setup() {
     }
     bools.push(column);
   }
+  pg = createGraphics(w, w);
 }
 
 function draw() {
@@ -83,8 +84,14 @@ function draw() {
       pop();
     }
   }
+
+  pg.background(100);
+  noiseField("random", pg);
+  image(pg, 0, 0);
+
+  /*
   stroke(100);
-  /*   line(padding, 0, padding, height);
+  line(padding, 0, padding, height);
   line(width - padding, 0, width - padding, height);
   line(0, padding, height, padding);
   line(0, height - padding, width, height - padding); */
