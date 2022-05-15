@@ -14,7 +14,7 @@ function setup() {
   background(palette[0].hsb);
 
   // size of the padding between grid and sketch borders
-  padding = Math.ceil(w / 12); //Math.ceil(w / 12);
+  padding = Math.ceil(w / 12);
 
   // number of rows and columns of the grid
   gridDivsX = 10;
@@ -37,7 +37,6 @@ function setup() {
 }
 
 function draw() {
-  //translate(-width / 2, -height / 2);
   noStroke();
   for (let x = 0; x < gridDivsX; x++) {
     for (let y = 0; y < gridDivsY; y++) {
@@ -89,33 +88,34 @@ function draw() {
   noiseField("random", pg);
   image(pg, 0, 0);
 
-  /*
-  stroke(100);
+  /*   stroke(100);
   line(padding, 0, padding, height);
   line(width - padding, 0, width - padding, height);
   line(0, padding, height, padding);
-  line(0, height - padding, width, height - padding); */
+  line(0, height - padding, width, height - padding);*/
   noLoop();
-  //saveCanvas(c, "Dance Dots", "png");
+  saveCanvas(c, `Dance Dots${centered ? " - centered" : ""}`, "png");
 }
 
 class BigCircle {
   constructor() {
+    this.sizeX = ceil(gridSpacingX);
+    this.sizeY = ceil(gridSpacingY);
     let shapeRoll = random();
     if (shapeRoll > 1) {
       fill(palette[random([1, 2, 3, 4])].hsb);
-      circle(0, 0, 2 * gridSpacingX);
+      circle(0, 0, 2 * this.sizeX);
     } else if (shapeRoll > 0.5) {
       fill(palette[random([1, 2, 3, 4])].hsb);
       rectMode(CENTER);
       rect(
         0,
         0,
-        gridSpacingX,
-        gridSpacingY,
-        0.5 * gridSpacingX,
-        0.5 * gridSpacingX,
-        0.5 * gridSpacingX,
+        this.sizeX,
+        this.sizeY,
+        0.5 * this.sizeX,
+        0.5 * this.sizeX,
+        0.5 * this.sizeX,
         0
       );
     } else {
@@ -128,8 +128,8 @@ class BigCircle {
         noFill();
         stroke(palette[random([1, 2, 3, 4])].hsb);
       }
-      strokeWeight(0.05 * gridSpacingX);
-      circle(0, 0, gridSpacingX - 0.05 * gridSpacingX);
+      strokeWeight(0.05 * this.sizeX);
+      circle(0, 0, this.sizeX - 0.05 * this.sizeX);
     }
   }
 }
