@@ -147,3 +147,27 @@ class SmallCircle {
     circle(0, 0, gridSpacingX / 2);
   }
 }
+
+class Heart {
+  constructor() {
+    this.x = 0 + gridSpacingX / 2;
+    this.y = 0 - gridDivsY * 2;
+    this.size = gridSpacingX;
+    noStroke();
+    fill(100);
+    beginShape();
+    /*     if (true) {
+      this.size = this.size * -1;
+    } */
+    vertex(this.x, this.y);
+    bezierVertex(
+      this.x - this.size / 2,
+      this.y - this.size / 2,
+      this.x - this.size,
+      this.y + this.size / 3,
+      this.x,
+      this.y + this.size
+    );
+    endShape(CLOSE);
+  }
+}
