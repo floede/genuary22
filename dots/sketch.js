@@ -94,7 +94,7 @@ function draw() {
   line(0, padding, height, padding);
   line(0, height - padding, width, height - padding);*/
   noLoop();
-  //saveCanvas(c, `Dance Dots${centered ? " - centered" : ""}`, "png");
+  //saveCanvas(c, `Dance Dots - Greys${centered ? " - centered" : ""}`, "png");
 }
 
 class BigCircle {
@@ -118,7 +118,7 @@ class BigCircle {
         0.5 * this.sizeX,
         0
       );
-    } else {
+    } else if (0.5 > shapeRoll && shapeRoll > 0.25) {
       if (random() > 0.5) {
         //noStroke();
         let col = palette[random([1, 2, 3, 4])].hsb;
@@ -130,6 +130,7 @@ class BigCircle {
       }
       strokeWeight(0.05 * this.sizeX);
       circle(0, 0, this.sizeX - 0.05 * this.sizeX);
+    } else {
     }
   }
 }
@@ -146,4 +147,10 @@ class SmallCircle {
     strokeWeight(0.05 * gridSpacingX);
     circle(0, 0, gridSpacingX / 2);
   }
+}
+
+function quarterCircle(params) {
+  noStroke();
+  fill(palette[random([1, 2, 3, 4])].hsb);
+  arc(0 - this.sizeX, 0 - this.sizeY, 2 * this.sizeX, 2 * this.sizeY, 0, 90);
 }
