@@ -5,6 +5,8 @@ const grid = [];
 const HexSize = 100;
 const HexSide = HexSize / Math.sqrt(3); //56;
 
+let colPick;
+
 const greys = [20, 60, 100, 140, 180, 220, 240];
 function setup(params) {
   c = createCanvas(w, h);
@@ -49,28 +51,17 @@ function draw(params) {
   //saveCanvas(c, "Combine", "png");
 }
 
-function rightSide(len, col) {
-  drawHalfHex(0, 0, len, col);
-  /*   let count = 0;
-  while (count < 3) {
-    rotate((count == 0 ? -30 : 60) * (PI / 180));
-    new Triangle(len, 0, 0, col);
-    count++;
-  } */
+function pickColorScheme() {
+  switch (colPick) {
+    case colPick > 0:
+      return randdomGrey();
+    default:
+      break;
+  }
 }
 
 function randdomGrey() {
   return greys[Math.floor(random(greys.length))];
-}
-
-function leftSide(len, col) {
-  drawHalfHex(0, 0, len, col);
-  /*   let count = 0;
-  while (count < 3) {
-    rotate(60 * (PI / 180));
-    new Triangle(len, 0, 0, col);
-    count++;
-  } */
 }
 
 class Triangle {
