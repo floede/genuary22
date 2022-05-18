@@ -16,6 +16,7 @@ const colArr = [
 function setup(params) {
   c = createCanvas(w, h);
   background(48, 87, 225);
+
   noStroke();
   for (let j = 0; j < 1 + h / HexSize; j++) {
     let row = [];
