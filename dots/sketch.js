@@ -60,6 +60,13 @@ function draw() {
         ? rollSmall > 40 + (distances.d / distances.max) * 100
         : rollSmall < -20 + (distances.d / distances.max) * 100;
 
+      let BigType;
+      if (true) {
+        showBig = true;
+        BigType = floor(map(distances.d, 0, distances.max, 4, 1));
+        console.log("BigType: ", BigType);
+      }
+
       let showDiamond = false; //rollDiamond > 50 + (d / maxDist) * 100;
 
       if (random(100) > 50 + (distances.d / distances.max) * 100) {
@@ -68,7 +75,7 @@ function draw() {
 
       if (showBig) {
         rotate(90 * floor(4 * random()));
-        let bigCircle = new BigCircle();
+        let bigCircle = new BigCircle(BigType);
       }
       if (showDiamond) {
         let diamond = new Diamond(gridSpacingX);
@@ -104,12 +111,12 @@ function draw() {
 }
 
 class BigCircle {
-  constructor() {
+  constructor(type = 0) {
     this.sizeX = ceil(gridSpacingX);
     this.sizeY = ceil(gridSpacingY);
+    this.type = type;
     let shapeRoll = random();
-    if (shapeRoll > 1) {
-    } else if (shapeRoll > 0.5) {
+    if (type === 3 || (type === 0 && shapeRoll > 0.5)) {
       fill(palette[random([1, 2, 3, 4])].hsb);
       rectMode(CENTER);
       rect(
@@ -123,12 +130,12 @@ class BigCircle {
         0
       );
     } else if (0.5 > shapeRoll && shapeRoll > 0) {
-      if (random() > 0.5) {
+      if (type === 2 || (type === 0 && random() > 0.5)) {
         //noStroke();
         let col = palette[random([1, 2, 3, 4])].hsb;
         fill(col);
         stroke(col);
-      } else {
+      } else if (type === 1 || type === 0) {
         noFill();
         stroke(palette[random([1, 2, 3, 4])].hsb);
       }
