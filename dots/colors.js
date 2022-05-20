@@ -2,7 +2,7 @@ colors = [
   [
     {
       name: "Eerie Black",
-      hex: "1c1d21",
+      hex: "#1c1d21",
       rgb: [28, 29, 33],
       cmyk: [15, 12, 0, 87],
       hsb: [228, 15, 13],
@@ -12,7 +12,7 @@ colors = [
     { hsb: [228, 5, 100] },
     {
       name: "Electric Blue",
-      hex: "00e8fc",
+      hex: "#00e8fc",
       rgb: [0, 232, 252],
       cmyk: [100, 8, 0, 1],
       hsb: [185, 100, 99],
@@ -21,7 +21,7 @@ colors = [
     },
     {
       name: "Outrageous Orange",
-      hex: "f96e46",
+      hex: "#f96e46",
       rgb: [249, 110, 70],
       cmyk: [0, 56, 72, 2],
       hsb: [13, 72, 98],
@@ -30,7 +30,7 @@ colors = [
     },
     {
       name: "Maize Crayola",
-      hex: "f9c846",
+      hex: "#f9c846",
       rgb: [249, 200, 70],
       cmyk: [0, 20, 72, 2],
       hsb: [44, 72, 98],
@@ -39,7 +39,7 @@ colors = [
     },
     {
       name: "Misty Rose",
-      hex: "ffe3e3",
+      hex: "#ffe3e3",
       rgb: [255, 227, 227],
       cmyk: [0, 11, 11, 0],
       hsb: [0, 11, 100],
