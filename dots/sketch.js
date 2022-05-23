@@ -3,20 +3,21 @@ const mappedShape = Math.random() < 0.15;
 const mappedCol = Math.random() < 0.15;
 const occurenceRoll = Math.random() * 100;
 const gravityRoll = Math.random() * 100;
-const cellSize = 20;
+const cellSizes = [10, 15, 20];
+const cellSize = cellSizes[Math.floor(cellSizes.length * Math.random())];
 
 let bools = [];
 let paletteNum, palette, occurence, gravity;
 
-if (gravityRoll < 20) {
+if (gravityRoll < 30) {
   gravity = "center";
-} else if (gravityRoll >= 20 && gravityRoll < 40) {
+} else if (gravityRoll >= 30 && gravityRoll < 47.5) {
   gravity = "vertical";
-} else if (gravityRoll >= 40 && gravityRoll < 60) {
+} else if (gravityRoll >= 47.5 && gravityRoll < 70) {
   gravity = "horizontal";
-} else if (gravityRoll >= 60 && gravityRoll < 80) {
+} else if (gravityRoll >= 70 && gravityRoll < 87.5) {
   gravity = "tl2br";
-} else if (gravityRoll >= 80 && gravityRoll < 100) {
+} else if (gravityRoll >= 87.5 && gravityRoll < 100) {
   gravity = "tr2bl";
 }
 
@@ -46,11 +47,12 @@ function setup() {
   background(palette[0].hsb);
 
   // size of the padding between grid and sketch borders
-  padding = Math.ceil(w / (centered ? 24 : 24));
+  //padding = Math.ceil(w / (centered ? 12 : 24));
+  padding = Math.ceil(w / 25);
 
   // number of rows and columns of the grid
-  gridDivsX = 10;
-  gridDivsY = 10;
+  gridDivsX = cellSize;
+  gridDivsY = cellSize;
 
   // actual spacing between grid points
   gridSpacingX = (w - padding * 2) / gridDivsX;
@@ -69,6 +71,7 @@ function setup() {
 }
 
 function draw() {
+  //translate(-width / 2, -height / 2);
   noStroke();
   for (let x = 0; x < gridDivsX; x++) {
     for (let y = 0; y < gridDivsY; y++) {
@@ -108,11 +111,6 @@ function draw() {
         BigType = floor(
           map(distances.d, gridSpacingX, distances.max - 2 * padding, 5, 1)
         );
-        console.table({
-          "Dist:": distances.d,
-          "Max:": distances.max,
-          "Type:": BigType,
-        });
       }
 
       if (mappedCol) {
@@ -122,7 +120,8 @@ function draw() {
             gridSpacingX,
             distances.max - padding,
             palette.length - 1,
-            1
+            1,
+            true
           )
         );
       }
@@ -135,14 +134,15 @@ function draw() {
       if (showSmall) {
         let smallCircle = new SmallCircle(BigType, colNum);
       }
-      /*
-      console.table({
-        "Max dist": maxDist,
-        dist: d,
-        "Dist %": (d / maxDist) * 100,
+
+      /*       console.table({
+        "Col Num:": colNum,
+        "Max dist": distances.max,
+        dist: distances.d,
+        "Dist %": (distances.d / distances.max) * 100,
         "Big roll": rollBig,
         "Small roll": rollSmall,
-      });*/
+      }); */
 
       pop();
     }
@@ -152,13 +152,13 @@ function draw() {
   noiseField("random", pg);
   image(pg, 0, 0);
 
-  stroke(100);
+  /*   stroke(100);
   line(padding, 0, padding, height);
   line(width - padding, 0, width - padding, height);
   line(0, padding, height, padding);
-  line(0, height - padding, width, height - padding);
+  line(0, height - padding, width, height - padding); */
   noLoop();
-  //saveCanvas(c, `Flowers - 1805 - mspped and ordered`, "png");
+  //saveCanvas(c, `Flowers - ${Date.now()}`, "png");
   console.table({
     "Occurence:": occurence,
     "Centered:": centered,
@@ -166,7 +166,6 @@ function draw() {
     "Mapped Shape:": mappedShape,
     "Mapped Color:": mappedCol,
     "Palette:": paletteNum,
-    "No of palettes: ": colors.length,
   });
 }
 
@@ -175,9 +174,10 @@ class BigCircle {
     this.sizeX = ceil(gridSpacingX);
     this.sizeY = ceil(gridSpacingY);
     this.type = type;
+    this.randCol = -1 + ceil(random() * palette.length); //random([1, 2, 3, 4]);
     let shapeRoll = random();
     if (type === 5 || (type === 0 && shapeRoll > 0.5)) {
-      fill(palette[colNum || random([1, 2, 3, 4])].hsb);
+      fill(palette[colNum || this.randCol].hsb);
       rectMode(CENTER);
       rect(
         0,
@@ -189,18 +189,18 @@ class BigCircle {
         0.5 * this.sizeX,
         0
       );
-    } else if (type === 4 || type === 3 || (type === 0 && 0.5 <= shapeRoll)) {
+    } else if (type === 4 || type === 3 || (type === 0 && shapeRoll <= 0.5)) {
       if (type === 4 || (type === 0 && random() > 0.5)) {
-        //noStroke();
-        let col = palette[colNum || random([1, 2, 3, 4])].hsb;
+        let col = palette[colNum || this.randCol].hsb;
         fill(col);
         stroke(col);
       } else if (type === 3 || type === 0) {
         noFill();
-        stroke(palette[colNum || random([1, 2, 3, 4])].hsb);
+        stroke(palette[colNum || this.randCol].hsb);
       }
       strokeWeight(0.05 * this.sizeX);
-      circle(0, 0, this.sizeX - 0.05 * this.sizeX);
+      let circleSize = this.sizeX - 0.05 * this.sizeX;
+      ellipse(0, 0, circleSize, circleSize, 50);
     }
   }
 }
@@ -208,7 +208,7 @@ class BigCircle {
 class SmallCircle {
   constructor(type = 0, colNum = false) {
     this.type = type;
-    this.col = colNum || random([1, 2, 3, 4]);
+    this.col = colNum || -1 + ceil(random() * palette.length);
 
     if (type < 3) {
       if (type === 2 || (type === 0 && random() > 0.5)) {
@@ -219,7 +219,7 @@ class SmallCircle {
         stroke(palette[this.col].hsb);
       }
       strokeWeight(0.05 * gridSpacingX);
-      circle(0, 0, gridSpacingX / 2);
+      ellipse(0, 0, gridSpacingX / 2, gridSpacingX / 2);
     }
   }
 }
