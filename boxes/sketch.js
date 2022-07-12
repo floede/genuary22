@@ -4,7 +4,9 @@ const h = 1000;
 const HexSize = 100;
 const HexSide = HexSize / Math.sqrt(3);
 const r = (HexSide * Math.sqrt(3)) / 2;
-const HexHeight = 1.499 * HexSide;
+const HexHeight = 1.5 * HexSide;
+
+const shuffleColors = true;
 
 const colors = [
   [164, 87],
@@ -24,7 +26,7 @@ const dimensions = [
 console.table(dimensions);
 
 function setup() {
-  c = createCanvas(w, h);
+  c = createCanvas(w, h, WEBGL);
   colorMode(HSB);
   background(
     ...colors[Math.floor(random(0, 2))],
@@ -33,25 +35,23 @@ function setup() {
 }
 
 function draw() {
+  translate(-width / 2, -height / 2);
   for (let row = 0; row < h / (r * Math.sqrt(3)) - 2; row++) {
     for (let col = 0; col < w / (HexSize + (row % 2)) - 1; col++) {
       push();
-      translate(
-        col * HexSize + 2.5 * r - (row % 2) * r,
-        row * (r * Math.sqrt(3)) + 1.95 * HexSide
-      );
-      //rotate((Math.floor(random(1, 3)) * 120 * PI) / 180 + HALF_PI);
+      let currX = col * HexSize + 2.5 * r - (row % 2) * r;
+      let currY = row * (r * Math.sqrt(3)) + 1.95 * HexSide;
+      translate(currX, currY);
       rotate(HALF_PI);
-      drawHex(0, 0, HexSide);
+      drawHex(0, 0, HexSide, currX, currY);
       pop();
     }
   }
-  //filter(BLUR, 1);
   noLoop();
   //saveCanvas(c, "Boxes", "png");
 }
 
-function drawHex(x, y, len) {
+function drawHex(x, y, len, currX, currY) {
   let gs = 0.5 * len;
   let tlc = [x - gs, y - r]; // left top corner
   let tcen = [x, y - r];
@@ -66,11 +66,12 @@ function drawHex(x, y, len) {
   let lmc = [x - len, y]; // left most corner
   let ten = [-0.75 * len, -0.5 * r];
 
-  let shuffleCol = colors.sort(() => Math.random() - 0.5);
-  let shuffleShade = shades.sort(() => Math.random() - 0.5);
+  let baseCol = shuffleColors ? colors.sort(() => Math.random() - 0.5) : colors;
+  //let shade = true ? shades.sort(() => Math.random() - 0.5) : shades;
+  let shade = map(currY, 0, height, 100, 30);
 
   noStroke();
-  fill(...shuffleCol[0], shuffleShade[0]);
+  fill(...baseCol[0], shade);
   beginShape();
   vertex(...tlc);
   vertex(...trc);
@@ -78,7 +79,7 @@ function drawHex(x, y, len) {
   vertex(x, y);
   endShape(CLOSE);
 
-  fill(...shuffleCol[1], shuffleShade[1]);
+  fill(...baseCol[1], shade);
   beginShape();
   vertex(x, y);
   vertex(...rmc);
@@ -86,7 +87,7 @@ function drawHex(x, y, len) {
   vertex(...blc);
   endShape(CLOSE);
 
-  fill(...shuffleCol[2], shuffleShade[2]);
+  fill(...baseCol[2], shade);
   beginShape();
   vertex(x, y);
   vertex(...blc);
