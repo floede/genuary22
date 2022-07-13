@@ -25,5 +25,22 @@ const noiseField = (noiseType, element) => {
     }
     element.updatePixels();
   }
+  if (noiseType === "perlin") {
+    let xoff = 0;
+    element.loadPixels();
+    for (let x = 0; x < element.width; x++) {
+      for (let y = 0; y < element.height; y++) {
+        let index = (x + y * width) * 4;
+        var r = noise(xoff) * 255;
+        element.pixels[index + 0] = r;
+        element.pixels[index + 1] = r;
+        element.pixels[index + 2] = r;
+        element.pixels[index + 3] = random(20, 40);
+
+        xoff += 0.01;
+      }
+    }
+    element.updatePixels();
+  }
   return element;
 };
