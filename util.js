@@ -44,3 +44,9 @@ const noiseField = (noiseType, element) => {
   }
   return element;
 };
+
+function keyPressed() {
+  if (key === "s") {
+    saveCanvas(c, `Boxes - ${Date.now()}`, "png");
+  }
+}
