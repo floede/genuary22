@@ -6,7 +6,7 @@ const HexSide = HexSize / Math.sqrt(3);
 const r = (HexSide * Math.sqrt(3)) / 2;
 const HexHeight = 1.5 * HexSide;
 
-const shuffleColors = true;
+const shuffleColors = false;
 
 const colors = [
   [164, 87],
@@ -29,8 +29,8 @@ function setup() {
   c = createCanvas(w, h, WEBGL);
   colorMode(HSB);
   background(
-    ...colors[Math.floor(random(0, 2))],
-    shades[Math.floor(random(0, 2))]
+    ...colors[Math.floor(random(0, 3))],
+    shades[Math.floor(random(0, 3))]
   );
 }
 
@@ -67,11 +67,14 @@ function drawHex(x, y, len, currX, currY) {
   let ten = [-0.75 * len, -0.5 * r];
 
   let baseCol = shuffleColors ? colors.sort(() => Math.random() - 0.5) : colors;
-  //let shade = true ? shades.sort(() => Math.random() - 0.5) : shades;
-  let shade = map(currY, 0, height, 100, 30);
+  let randShade = shades.sort(() => Math.random() - 0.5);
+  let mapShade = map(currY, 0, height, 100, 30);
+  let shade = (pick) => {
+    return false ? randShade[pick] : mapShade;
+  };
 
   noStroke();
-  fill(...baseCol[0], shade);
+  fill(...baseCol[0], shade(0));
   beginShape();
   vertex(...tlc);
   vertex(...trc);
@@ -79,7 +82,7 @@ function drawHex(x, y, len, currX, currY) {
   vertex(x, y);
   endShape(CLOSE);
 
-  fill(...baseCol[1], shade);
+  fill(...baseCol[1], shade(1));
   beginShape();
   vertex(x, y);
   vertex(...rmc);
@@ -87,11 +90,17 @@ function drawHex(x, y, len, currX, currY) {
   vertex(...blc);
   endShape(CLOSE);
 
-  fill(...baseCol[2], shade);
+  fill(...baseCol[2], shade(2));
   beginShape();
   vertex(x, y);
   vertex(...blc);
   vertex(...lmc);
   vertex(...tlc);
   endShape(CLOSE);
+}
+
+function keyPressed() {
+  if (key === "s") {
+    saveCanvas(c, `Boxes - ${Date.now()}`, "png");
+  }
 }
