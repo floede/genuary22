@@ -8,6 +8,7 @@ let noOfRows = 4; //Math.floor((h - 2 * border) / squareH);
 
 const squareW = (w - 2 * border) / noOfCols;
 const squareH = (h - 2 * border) / noOfRows;
+const squareDia = Math.sqrt(Math.pow(squareW, 2) + Math.pow(squareH, 2));
 
 const unit = w / 1000;
 
@@ -18,12 +19,12 @@ let shadows = [];
 const pattern = [
   [
     [95, 60, 70],
-    [100, 0, 10],
+    [0, 0, 10],
     [20, 20, 80],
     [100, 0, 90],
     [0, 0, 90],
     [20, 20, 80],
-    [100, 0, 10],
+    [0, 0, 10],
     [95, 60, 70],
   ],
   [20, 80, 20, 80, 20, 80, 20, 80],
@@ -44,6 +45,8 @@ function setup() {
     }
     coords.push(row);
   }
+  pg = createGraphics(w, w);
+  _renderer.GL.disable(_renderer.GL.DEPTH_TEST);
 }
 
 function draw() {
@@ -75,6 +78,10 @@ function draw() {
   shadows.forEach((element) => {
     element.build();
   });
+
+  //pg.background(100);
+  //noiseField("perlin", pg);
+  //image(pg, 0, 0);
 
   noLoop();
 }
@@ -115,6 +122,11 @@ class BaseElement {
     noStroke();
     fill(color);
     triangle(...coords);
+    // texture = createGraphics(100, 100);
+    // noiseField("perlin", texture);
+    //fill(30, 0.7);
+    rectMode(CENTER);
+    square((coords[2] + coords[0]) / 2, (coords[3] + coords[5]) / 2, 50);
     shadows.push(new ShadowLine([this.x2, this.y1, this.x3, this.y2], "cross"));
     shadows.push(new ShadowLine([this.x2, this.y1, this.x1, this.y2], "cross"));
     shadows.push(new ShadowLine([this.x1, this.y2, this.x2, this.y3], "cross"));
@@ -127,8 +139,8 @@ class ShadowLine {
     this.pos1 = pos[0];
     this.direction = direction;
 
-    this.lightShade = [0, 0.01];
-    this.darkShade = [0, 0.02];
+    this.lightShade = [0, 0.03];
+    this.darkShade = [0, 0.06];
 
     this.lines = [];
 
