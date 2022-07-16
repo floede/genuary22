@@ -47,6 +47,10 @@ const noiseField = (noiseType, element) => {
 
 function keyPressed() {
   if (key === "s") {
-    saveCanvas(c, `Boxes - ${Date.now()}`, "png");
+    saveCanvas(c, `${Date.now()}`, "png");
   }
+}
+
+function getRandInRange(min, max) {
+  return Math.random() * (max - min) + min;
 }
