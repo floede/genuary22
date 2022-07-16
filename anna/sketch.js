@@ -8,13 +8,20 @@ let noOfRows = 4; //Math.floor((h - 2 * border) / squareH);
 
 const squareW = (w - 2 * border) / noOfCols;
 const squareH = (h - 2 * border) / noOfRows;
-const squareDia = Math.sqrt(Math.pow(squareW, 2) + Math.pow(squareH, 2));
+const squareDia = Math.sqrt(
+  Math.pow(squareW / 2, 2) + Math.pow(squareH / 2, 2)
+);
+
+console.table({ Width: squareW, Height: squareH, Diagonal: squareDia });
 
 const unit = w / 1000;
 
 let coords = [];
 let elements = [];
 let shadows = [];
+let borderElms = [];
+
+const bgCol = [95, 60, 70];
 
 const pattern = [
   [
@@ -31,9 +38,10 @@ const pattern = [
 ];
 
 function setup() {
-  c = createCanvas(w, w, WEBGL);
+  c = createCanvas(w, w);
   colorMode(HSB);
-  background(95, 60, 70);
+  angleMode(DEGREES);
+  background(bgCol);
 
   for (var j = 0; j < noOfRows; j++) {
     let row = [];
@@ -45,12 +53,51 @@ function setup() {
     }
     coords.push(row);
   }
-  pg = createGraphics(w, w);
-  _renderer.GL.disable(_renderer.GL.DEPTH_TEST);
+
+  for (let k = 0; k < 2; k++) {
+    let row = [];
+    for (let l = 0; l < noOfCols + 2; l++) {
+      borderElms.push({
+        x: l * squareW + border - squareW,
+        y: k * (height - border),
+      });
+    }
+    for (let m = 0; m < noOfRows; m++) {
+      borderElms.push({
+        x: k * (width - border),
+        y: m * squareH + border,
+      });
+    }
+    //borderElms.push(row);
+  }
+  // pg = createGraphics(squareDia, squareDia);
+  // _renderer.GL.disable(_renderer.GL.DEPTH_TEST);
 }
 
 function draw() {
-  translate(-w / 2, -h / 2);
+  //translate(-w / 2, -h / 2);
+
+  for (let i = 0; i < borderElms.length; i++) {
+    fill(bgCol);
+    noStroke();
+    if (borderElms[i].y === 0 || borderElms[i].y === height - border) {
+      push();
+      rect(borderElms[i].x, borderElms[i].y, squareW, border);
+
+      drawingContext.clip();
+
+      let texture = new Texture(borderElms[i].x + 140, borderElms[i].y, false);
+      pop();
+    } else if (borderElms[i].x === 0 || borderElms[i].x === width - border) {
+      push();
+      rect(borderElms[i].x, borderElms[i].y, border, squareH);
+      drawingContext.clip();
+
+      let texture = new Texture(borderElms[i].x + 140, borderElms[i].y, false);
+      pop();
+    }
+  }
+
   for (let j = 0; j < coords.length; j++) {
     for (let i = 0; i < coords[j].length; i++) {
       elements.push(new BaseElement(coords[j][i].x, coords[j][i].y, j, i));
@@ -79,10 +126,6 @@ function draw() {
     element.build();
   });
 
-  //pg.background(100);
-  //noiseField("perlin", pg);
-  //image(pg, 0, 0);
-
   noLoop();
 }
 
@@ -105,13 +148,13 @@ class BaseElement {
     this.triangles = [];
 
     this.triangles.push([this.x1, this.y1, this.x2, this.y1, this.x1, this.y2]);
-    this.triangles.push([this.x2, this.y1, this.x2, this.y2, this.x1, this.y2]);
-    this.triangles.push([this.x2, this.y1, this.x2, this.y2, this.x3, this.y2]);
+    this.triangles.push([this.x2, this.y2, this.x1, this.y2, this.x2, this.y1]);
+    this.triangles.push([this.x2, this.y2, this.x3, this.y2, this.x2, this.y1]);
     this.triangles.push([this.x2, this.y1, this.x3, this.y1, this.x3, this.y2]);
-    this.triangles.push([this.x1, this.y2, this.x2, this.y3, this.x1, this.y3]);
+    this.triangles.push([this.x1, this.y3, this.x2, this.y3, this.x1, this.y2]);
     this.triangles.push([this.x1, this.y2, this.x2, this.y2, this.x2, this.y3]);
     this.triangles.push([this.x2, this.y2, this.x3, this.y2, this.x2, this.y3]);
-    this.triangles.push([this.x3, this.y2, this.x3, this.y3, this.x2, this.y3]);
+    this.triangles.push([this.x2, this.y3, this.x3, this.y2, this.x3, this.y3]);
   }
   build(pattern) {
     for (let i = 0; i < this.triangles.length; i++) {
@@ -119,18 +162,23 @@ class BaseElement {
     }
   }
   show(coords, color) {
+    push();
     noStroke();
     fill(color);
     triangle(...coords);
-    // texture = createGraphics(100, 100);
-    // noiseField("perlin", texture);
-    //fill(30, 0.7);
-    rectMode(CENTER);
-    square((coords[2] + coords[0]) / 2, (coords[3] + coords[5]) / 2, 50);
+
+    drawingContext.clip();
+
+    let texture = new Texture(
+      (coords[2] + coords[0]) / 2,
+      (coords[3] + coords[5]) / 2
+    );
+
     shadows.push(new ShadowLine([this.x2, this.y1, this.x3, this.y2], "cross"));
     shadows.push(new ShadowLine([this.x2, this.y1, this.x1, this.y2], "cross"));
     shadows.push(new ShadowLine([this.x1, this.y2, this.x2, this.y3], "cross"));
     shadows.push(new ShadowLine([this.x3, this.y2, this.x2, this.y3], "cross"));
+    pop();
   }
 }
 
@@ -198,6 +246,45 @@ class ShadowLine {
     push();
     stroke(...elm.color);
     line(...elm.coords);
+    pop();
+  }
+}
+
+class Texture {
+  constructor(x, y, rotation = true) {
+    this.x = x;
+    this.y = y;
+    this.rotation = rotation;
+    this.dist = 200; //squareDia / 2;
+    this.noOfLines = Math.floor(this.dist / unit);
+
+    push();
+    translate(this.x, this.y);
+    //fill(20);
+    //rect(0, 0, 20, 20);
+    if (this.rotation) {
+      rotate(Math.random() * 360);
+    }
+    for (let index = 0; index < this.noOfLines; index++) {
+      stroke(getRandInRange(20, 80), getRandInRange(0.05, 0.09));
+      line(
+        -this.dist,
+        -this.dist + 2 * index,
+        this.dist,
+        -this.dist + 2 * index
+      );
+    }
+
+    for (let index = 0; index < this.noOfLines; index++) {
+      stroke(getRandInRange(20, 80), getRandInRange(0.05, 0.09));
+      line(
+        -this.dist + 2 * index,
+        -this.dist,
+        -this.dist + 2 * index,
+        this.dist
+      );
+    }
+
     pop();
   }
 }
